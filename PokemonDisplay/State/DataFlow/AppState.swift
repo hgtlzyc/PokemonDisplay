@@ -9,12 +9,13 @@ import Combine
 
 struct AppState {
     var pokemonList = PokemonList()
+    //for testing
+    var currentStatus = String()
 }
 
 extension AppState {
     struct PokemonList {
-        
-        var pokemonsDic: [Int: String]?
+        var pokemonsNameDic: [Int: String]?
         
     }
 }

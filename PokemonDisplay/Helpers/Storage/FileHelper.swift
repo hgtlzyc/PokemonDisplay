@@ -26,7 +26,7 @@ enum FileHelper {
         return try appDecoder.decode(T.self, from: data)
     }
     
-    private static let appDecoder: JSONDecoder = {
+    static let appDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
@@ -50,7 +50,7 @@ enum FileHelper {
         try data.write(to: url)
     }
     
-    private static let appEncoder: JSONEncoder = {
+    static let appEncoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         return encoder
@@ -60,7 +60,7 @@ enum FileHelper {
     //File delete
     static func delete(from directory: FileManager.SearchPathDirectory, fileName: String) throws {
         guard let url = FileManager.default.urls(for: directory, in: .userDomainMask).first else {
-            return
+            throw AppError.unableAccessFileDirectory(directory)
         }
         try FileManager.default.removeItem(at: url.appendingPathComponent(fileName))
     }

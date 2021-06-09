@@ -1,5 +1,5 @@
 //
-//  FileStorage.swift
+//  FileStorageWrapper.swift
 //  PokemonDisplay
 //
 //  Created by lijia xu on 6/8/21.
@@ -29,9 +29,17 @@ struct FileStorage<T: Codable> {
             let fileName = self.fileName
             queue.async {
                 if let value = newValue {
-                    try? FileHelper.writeJSON(value, to: directory, fileName: fileName)
+                    do {
+                        try FileHelper.writeJSON(value, to: directory, fileName: fileName)
+                    } catch let error {
+                        print(error)
+                    }
                 } else {
-                    try? FileHelper.delete(from: directory, fileName: fileName)
+                    do {
+                        try FileHelper.delete(from: directory, fileName: fileName)
+                    } catch let error {
+                        print(error)
+                    }
                 }
             }
         }
