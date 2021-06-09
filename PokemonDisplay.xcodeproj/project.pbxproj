@@ -13,6 +13,11 @@
 		E98E756A2670303800E68D09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E98E75692670303800E68D09 /* Assets.xcassets */; };
 		E98E756D2670303800E68D09 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E98E756C2670303800E68D09 /* Preview Assets.xcassets */; };
 		E98E75702670303800E68D09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E98E756E2670303800E68D09 /* LaunchScreen.storyboard */; };
+		E98E757D2670378E00E68D09 /* StateCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98E757C2670378E00E68D09 /* StateCenter.swift */; };
+		E98E758126703C8100E68D09 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98E758026703C8100E68D09 /* AppState.swift */; };
+		E98E758326703D3800E68D09 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98E758226703D3800E68D09 /* AppError.swift */; };
+		E98E758626703EE600E68D09 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98E758526703EE600E68D09 /* FileStorage.swift */; };
+		E98E758826703F2B00E68D09 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98E758726703F2B00E68D09 /* FileHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		E98E756C2670303800E68D09 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E98E756F2670303800E68D09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E98E75712670303800E68D09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E98E757C2670378E00E68D09 /* StateCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateCenter.swift; sourceTree = "<group>"; };
+		E98E758026703C8100E68D09 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		E98E758226703D3800E68D09 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		E98E758526703EE600E68D09 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
+		E98E758726703F2B00E68D09 /* FileHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +68,10 @@
 			children = (
 				E98E75632670303500E68D09 /* AppDelegate.swift */,
 				E98E75652670303500E68D09 /* SceneDelegate.swift */,
-				E98E75672670303500E68D09 /* ContentView.swift */,
+				E98E757B267036E500E68D09 /* State */,
+				E98E7578267034B900E68D09 /* Model */,
+				E98E7577267034A800E68D09 /* Views */,
+				E98E7579267034C900E68D09 /* Helpers */,
 				E98E75692670303800E68D09 /* Assets.xcassets */,
 				E98E756E2670303800E68D09 /* LaunchScreen.storyboard */,
 				E98E75712670303800E68D09 /* Info.plist */,
@@ -73,6 +86,72 @@
 				E98E756C2670303800E68D09 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E98E7577267034A800E68D09 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E98E75672670303500E68D09 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E98E7578267034B900E68D09 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E98E7579267034C900E68D09 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E98E758426703EAF00E68D09 /* Storage */,
+				E98E757A267034DA00E68D09 /* Extensions */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E98E757A267034DA00E68D09 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E98E757B267036E500E68D09 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				E98E757E26703C4900E68D09 /* DataFlow */,
+				E98E757F26703C5800E68D09 /* Network */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		E98E757E26703C4900E68D09 /* DataFlow */ = {
+			isa = PBXGroup;
+			children = (
+				E98E757C2670378E00E68D09 /* StateCenter.swift */,
+				E98E758026703C8100E68D09 /* AppState.swift */,
+				E98E758226703D3800E68D09 /* AppError.swift */,
+			);
+			path = DataFlow;
+			sourceTree = "<group>";
+		};
+		E98E757F26703C5800E68D09 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		E98E758426703EAF00E68D09 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				E98E758526703EE600E68D09 /* FileStorage.swift */,
+				E98E758726703F2B00E68D09 /* FileHelper.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,8 +224,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98E758126703C8100E68D09 /* AppState.swift in Sources */,
 				E98E75642670303500E68D09 /* AppDelegate.swift in Sources */,
+				E98E758326703D3800E68D09 /* AppError.swift in Sources */,
+				E98E758826703F2B00E68D09 /* FileHelper.swift in Sources */,
 				E98E75662670303500E68D09 /* SceneDelegate.swift in Sources */,
+				E98E758626703EE600E68D09 /* FileStorage.swift in Sources */,
+				E98E757D2670378E00E68D09 /* StateCenter.swift in Sources */,
 				E98E75682670303500E68D09 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,7 +382,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lijia.PokemonDisplay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -319,7 +403,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lijia.PokemonDisplay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
