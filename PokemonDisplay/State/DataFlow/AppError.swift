@@ -10,6 +10,8 @@ import Foundation
 enum AppError: Error {
     
     
+    //Network Related
+    case networkError(Error)
     
     //FileStorage Related
     case unableAccessFileDirectory(FileManager.SearchPathDirectory)

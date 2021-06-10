@@ -8,14 +8,20 @@
 import Combine
 
 struct AppState {
-    var pokemonList = PokemonList()
-    //for testing
-    var currentStatus = String()
+    var pokemonListState = PokemonListState()
 }
 
+//PokemonList State
 extension AppState {
-    struct PokemonList {
-        var pokemonsNameDic: [Int: String]?
+    struct PokemonListState {
+        
+        //States
+        var loadPokemonError: AppError?
+        var currentlyLoadingPokemons = false
+        
+        //Data
+        @FileStorage(directory: .cachesDirectory, fileName: "pokemons.json")
+        var pokemonsDic: [Int: PokemonViewModel]?
         
     }
 }

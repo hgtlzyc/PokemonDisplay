@@ -10,5 +10,5 @@ import Foundation
 enum AppAction {
     
     case loadPokemons
-    
+    case receivedPokemons(Result<[PokemonViewModel], AppError>)
 }
