@@ -8,7 +8,8 @@
 import Foundation
 
 enum AppAction {
-    
-    case loadPokemons
-    case receivedPokemons(Result<[PokemonViewModel], AppError>)
+    case deletePokemonCache
+    case cancelPokemonLoading
+    case loadPokemons(withIndexRange: ClosedRange<Int>)
+    case receivedPokemons(Result<[Int:PokemonViewModel], AppError>?, isFinished: Bool)
 }

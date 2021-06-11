@@ -8,50 +8,72 @@
 import Foundation
 import Combine
 
+enum StateCenterSubType: Hashable, CaseIterable{
+    case loadingPokemon
+}
+
+
 class StateCenter: ObservableObject {
     @Published var appState = AppState()
     
+    var subscriptions = [StateCenterSubType : Set<AnyCancellable>]()
     
-    func executeAction(_ action: AppAction) {
-        //print("[action] starting \(action)")
-        
-        let result = StateCenter.reduce(state: self.appState, action: action)
-        self.appState = result.newState
-        guard let command = result.newCommand else { return }
-        print("[command] start command \(command)")
-        command.execute(in: self)
+    init() {
+        cancelAndResetSubscritions(types: StateCenterSubType.allCases)
     }
     
     
-    private static func reduce(state: AppState, action: AppAction) -> (newState: AppState, newCommand: AppCommand?) {
+    func executeAction(_ action: AppAction) {
+       // print("[action] start \(action)")
+        let result = self.reduce(state: self.appState, action: action)
+        self.appState = result.newState
+        guard let command = result.newCommand else { return }
+       // print("[command] start command \(command)")
+        command.execute(in: self)
+    }
+    
+    private func cancelAndResetSubscritions(types: [StateCenterSubType]) {
+        types.forEach { subType in
+            subscriptions[subType]?.forEach{$0.cancel()}
+            subscriptions[subType] =  Set<AnyCancellable>()
+        }
+    }
+    
+    private func reduce(state: AppState, action: AppAction) -> (newState: AppState, newCommand: AppCommand?) {
         var appState = state
         var appCommand: AppCommand? = nil
         
         switch action {
-        case .loadPokemons:
+        case .loadPokemons(let range) :
             if appState.pokemonListState.currentlyLoadingPokemons {
+                print("load brake")
                 break
             }
-            appState.pokemonListState.loadPokemonError = nil
             appState.pokemonListState.currentlyLoadingPokemons = true
-            appCommand = LoadPokemonsCommand()
+            appState.pokemonListState.loadPokemonError = nil
+            appCommand = LoadPokemonsCommand(closedIndexRange: range)
             
-        case .receivedPokemons(let result):
-            appState.pokemonListState.currentlyLoadingPokemons = false
+        case let .receivedPokemons( result, isFinished):
+            appState.pokemonListState.currentlyLoadingPokemons = !isFinished
+            guard let result = result else { break }
             switch result {
             case .failure(let error):
                 appState.pokemonListState.loadPokemonError = error
-            case .success(let pokemonViewModelArray):
-                print(pokemonViewModelArray)
-            //appState.pokemonListState.pokemonsDic =
+            case .success(let pokemonViewModelDic):
+                appState.pokemonListState.pokemonsDic = pokemonViewModelDic
             }
+        case .cancelPokemonLoading:
+            guard appState.pokemonListState.currentlyLoadingPokemons else { break }
+            cancelAndResetSubscritions(types: [.loadingPokemon])
+            appState.pokemonListState.currentlyLoadingPokemons = false
+            
+        case .deletePokemonCache:
+            appState.pokemonListState.pokemonsDic = nil
+            
         }
         
         return (newState: appState, newCommand: appCommand)
     }
-    
-    //Subscritions related
-    var subscriptions = [UUID : AnyCancellable]()
-    
+        
 }
 

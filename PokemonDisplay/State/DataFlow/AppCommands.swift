@@ -13,33 +13,46 @@ protocol AppCommand {
 }
 
 struct LoadPokemonsCommand: AppCommand {
+    
+    let closedIndexRange : ClosedRange<Int>
+    
     func execute(in stateCenter: StateCenter) {
-        let subscritionToken = [(1,"picapica"), (2,"dragon"), (3, "bird")]
+        
+        //simulate network calls with random arrive time
+        let stringBase = ["picapica", "dragon", "bird", "cat", "dog"]
+        let tupleBaseArray = Array(closedIndexRange)
+            .map { ( $0, (stringBase.randomElement() ?? "nobase") + "   \($0)") }
+            .shuffled()
+        
+        tupleBaseArray
             .publisher
-            .flatMap(maxPublishers: .max(1) ) { tuple in
-                Just(tuple).delay(for: .seconds(2) , scheduler: DispatchQueue.global(qos: .userInitiated) )
+            //backpressure management
+            .flatMap(maxPublishers: .max(2) ) { tuple in
+                Just(tuple).delay(for: .seconds(0.1) , scheduler: DispatchQueue.global(qos: .background) )
                     
             }
-            .scan([(0,"")]) { $0 + [$1] }
+            .scan([(Int,String)]()) { $0 + [$1] }
             .receive(on: DispatchQueue.main)
+            .handleEvents(receiveCancel: {
+                print("cancelled")
+            })
             .eraseToAnyPublisher()
-            .sink { tupleArray in
-                let viewModelArray = Array(tupleArray[1...]).map {
-                    PokemonViewModel(
-                        dataModel:
-                            PokemonDataModel(id: $0.0, name: $0.1)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    stateCenter.executeAction(
+                        .receivedPokemons( nil ,isFinished: true)
                     )
                 }
+            }, receiveValue: { tupleArray in
+                let viewModelDic = tupleArray.reduce(into: [Int: PokemonViewModel]()) { result, nextTuple in
+                    result[nextTuple.0] = PokemonViewModel(dataModel: PokemonDataModel(id: nextTuple.0, name: nextTuple.1))
+                }
+                
                 stateCenter.executeAction(
-                    .receivedPokemons(
-                        .success(
-                            viewModelArray
-                        )
-                    )
+                    .receivedPokemons( .success(viewModelDic) ,isFinished: false)
                 )
-            }
-        
-        stateCenter.subscriptions[UUID()] = subscritionToken
-        
+            })
+            .store(in: &stateCenter.subscriptions[.loadingPokemon]!)
     }
 }
