@@ -8,4 +8,4 @@ Property wrapper Cache system store the viewmodels as json files
 
 Next:
 
-Finish setup UI testing the structure 
+Finish setup UI, test the structure 
