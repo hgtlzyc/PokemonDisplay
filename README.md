@@ -9,3 +9,4 @@ Property wrapper Cache system store the viewmodels as json files
 Next:
 
 Finish setup UI, test the structure 
+make the task able to "resume"
