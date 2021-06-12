@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var stateCenter: StateCenter
-    @State var range: ClosedRange<Int> = (1...50)
+    
+    @State var range: ClosedRange<Int> = (1...100)
     
     var body: some View {
         VStack{
@@ -21,11 +22,21 @@ struct ContentView: View {
                 }
             }
             .animation(.easeIn)
-            HStack{
+            
+            let listState = stateCenter.appState.pokemonListState
+            if let progress = listState.currentLoadProgress {
+                if let text = listState.progressTextString {
+                    Text(text)
+                }
                 
+                if listState.shouldShowProgressBar {
+                    ProgressBar(value: progress)
+                            .padding(.horizontal)
+                            .frame(height: 10)
+                }
             }
             
-            HomeViewBottom(stateCenter: stateCenter, range: $range)
+            HomeViewBottom(stateCenter: stateCenter, range: $range).padding()
         }
     }
 }

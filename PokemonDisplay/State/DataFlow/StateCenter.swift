@@ -49,6 +49,8 @@ class StateCenter: ObservableObject {
                 print("load brake")
                 break
             }
+            (appState.pokemonListState.listLowerBound, appState.pokemonListState.listUpperInclusiveBound) = (range.lowerBound, range.upperBound)
+            appState.pokemonListState.pokemonsDic = nil
             appState.pokemonListState.currentlyLoadingPokemons = true
             appState.pokemonListState.loadPokemonError = nil
             appCommand = LoadPokemonsCommand(closedIndexRange: range)
@@ -58,10 +60,12 @@ class StateCenter: ObservableObject {
             guard let result = result else { break }
             switch result {
             case .failure(let error):
+                print(error)
                 appState.pokemonListState.loadPokemonError = error
             case .success(let pokemonViewModelDic):
                 appState.pokemonListState.pokemonsDic = pokemonViewModelDic
             }
+            
         case .cancelPokemonLoading:
             guard appState.pokemonListState.currentlyLoadingPokemons else { break }
             cancelAndResetSubscritions(types: [.loadingPokemon])

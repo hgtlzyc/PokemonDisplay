@@ -10,6 +10,9 @@ import Foundation
 enum AppError: Error {
     
     
+    //Subscriptions
+    case subscriptionCancelled
+    
     //Network Related
     case networkError(Error)
     

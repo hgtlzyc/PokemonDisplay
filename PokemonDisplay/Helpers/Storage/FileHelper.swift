@@ -62,6 +62,6 @@ enum FileHelper {
         guard let url = FileManager.default.urls(for: directory, in: .userDomainMask).first else {
             throw AppError.unableAccessFileDirectory(directory)
         }
-        try FileManager.default.removeItem(at: url.appendingPathComponent(fileName))
+        try? FileManager.default.removeItem(at: url.appendingPathComponent(fileName))
     }
 }

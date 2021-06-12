@@ -27,14 +27,16 @@ struct LoadPokemonsCommand: AppCommand {
         tupleBaseArray
             .publisher
             //backpressure management
-            .flatMap(maxPublishers: .max(2) ) { tuple in
-                Just(tuple).delay(for: .seconds(0.1) , scheduler: DispatchQueue.global(qos: .background) )
-                    
+            .flatMap(maxPublishers: .max(1) ) { tuple in
+                Just(tuple).delay(for: .seconds(0.05) , scheduler: DispatchQueue(label: "\(tuple.0)") )
             }
+            .subscribe(on: DispatchQueue.global(qos: .background))
             .scan([(Int,String)]()) { $0 + [$1] }
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveCancel: {
-                print("cancelled")
+                stateCenter.executeAction(
+                    .receivedPokemons(.failure(.subscriptionCancelled), isFinished: true)
+                )
             })
             .eraseToAnyPublisher()
             .sink(receiveCompletion: { completion in

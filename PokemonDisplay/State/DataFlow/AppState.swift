@@ -16,15 +16,48 @@ extension AppState {
     struct PokemonListState {
         
         //States
+        var listLowerBound: Int?
+        var listUpperInclusiveBound: Int?
         var loadPokemonError: AppError?
         var currentlyLoadingPokemons = false
         
+        var currentValuesCount: Int? {
+            guard let count = pokemonsDic?.count else { return nil }
+            return count
+        }
         
+        //progress bar related
+        var progressTextString: String? {
+            guard let progress = currentLoadProgress else { return nil }
+            let percent = progress * 100
+            switch percent {
+            case let x where x == 100:
+                guard let lower = listLowerBound,
+                      let upper = listUpperInclusiveBound else {
+                    return "All Finished"
+                }
+                return "\(lower) to \(upper) All Finished"
+            case let x where x == 0.0:
+                return nil
+            default:
+                return String(Int(percent)) + "%"
+            }
+        }
         
-        //calclated values
-        var sortdPokemonList: [PokemonViewModel] {
-            guard let pokemonDic = pokemonsDic else { return [] }
-            return pokemonDic.keys.sorted(by: < ).reduce(into: []) { $0 = $0 + [pokemonDic[$1]!] }
+        var currentLoadProgress: Double? {
+            get{
+                return PokemonListStateTracker(listLowerBound, listUpperInclusiveBound, currentValuesCount)?.currentProgress
+            }
+        }
+        
+        var shouldShowProgressBar: Bool {
+            guard let progress = currentLoadProgress else { return false }
+            return currentlyLoadingPokemons || (progress != 1.0)
+        }
+        
+        //buttons related
+        var buttonShouldDisplayLoading: Bool {
+            currentlyLoadingPokemons
         }
         
         var homeViewLoadStatusString: String {
@@ -41,6 +74,14 @@ extension AppState {
                 return "Load"
             }
         }
+        
+        
+        //calclated data values
+        var sortdPokemonList: [PokemonViewModel] {
+            guard let pokemonDic = pokemonsDic else { return [] }
+            return pokemonDic.keys.sorted(by: < ).reduce(into: []) { $0 = $0 + [pokemonDic[$1]!] }
+        }
+        
         
         //Data
         @FileStorage(directory: .cachesDirectory,

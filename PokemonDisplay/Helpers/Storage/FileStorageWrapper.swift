@@ -32,13 +32,13 @@ struct FileStorage<T: Codable> {
                     do {
                         try FileHelper.writeJSON(value, to: directory, fileName: fileName)
                     } catch let error {
-                        print(error)
+                        print(["Json write"],  error)
                     }
                 } else {
                     do {
                         try FileHelper.delete(from: directory, fileName: fileName)
                     } catch let error {
-                        print(error)
+                        print(["Json delete"], error)
                     }
                 }
             }
