@@ -12,8 +12,7 @@ protocol AppCommand {
     func execute(in stateCenter: StateCenter)
 }
 
-struct LoadPokemonsCommand: AppCommand {
-    
+struct reloadALLPokemonsCommand: AppCommand {
     let closedIndexRange : ClosedRange<Int>
     
     func execute(in stateCenter: StateCenter) {

@@ -8,5 +8,6 @@
 import Foundation
 
 struct kJsonFileNames{
-    static let pokemonJsonFileName = "pokemons.json"
+    static let pokemonsJsonFileName = "pokemons.json"
+    static let pokemonRangeJsonFileName = "pokemonIndexRange.json"
 }

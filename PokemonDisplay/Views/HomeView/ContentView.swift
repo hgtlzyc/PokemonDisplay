@@ -24,6 +24,11 @@ struct ContentView: View {
             .animation(.easeIn)
             
             let listState = stateCenter.appState.pokemonListState
+            
+            if let indexSet = listState.missingIndexSet {
+                Text("\(indexSet.count)")
+            }
+            
             if let progress = listState.currentLoadProgress {
                 if let text = listState.progressTextString {
                     Text(text)

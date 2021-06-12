@@ -44,16 +44,20 @@ class StateCenter: ObservableObject {
         var appCommand: AppCommand? = nil
         
         switch action {
-        case .loadPokemons(let range) :
+        case .reloadAllPokemons(let range) :
             if appState.pokemonListState.currentlyLoadingPokemons {
                 print("load brake")
                 break
             }
-            (appState.pokemonListState.listLowerBound, appState.pokemonListState.listUpperInclusiveBound) = (range.lowerBound, range.upperBound)
+            appState.pokemonListState.pokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound)
             appState.pokemonListState.pokemonsDic = nil
             appState.pokemonListState.currentlyLoadingPokemons = true
             appState.pokemonListState.loadPokemonError = nil
-            appCommand = LoadPokemonsCommand(closedIndexRange: range)
+            appCommand = reloadALLPokemonsCommand(closedIndexRange: range)
+            
+        case .loadSelectedPokemons(let indexSet):
+            print(indexSet)
+            break
             
         case let .receivedPokemons( result, isFinished):
             appState.pokemonListState.currentlyLoadingPokemons = !isFinished

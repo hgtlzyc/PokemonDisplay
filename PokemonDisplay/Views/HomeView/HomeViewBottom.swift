@@ -16,7 +16,7 @@ struct HomeViewBottom: View {
             let isListEmpty = stateCenter.appState.pokemonListState.pokemonsDic == nil
             
             Button(action: {
-                stateCenter.executeAction(.loadPokemons(withIndexRange: range))
+                stateCenter.executeAction(.reloadAllPokemons(withIndexRange: range))
             }, label: {
                 Text( stateCenter.appState.pokemonListState.homeViewLoadStatusString)
                     .frame(width: 100, height: 50, alignment: .center)
