@@ -1,5 +1,5 @@
 //
-//  PokemonRange.swift
+//  PokemonIndexRange.swift
 //  PokemonDisplay
 //
 //  Created by lijia xu on 6/11/21.
