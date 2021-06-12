@@ -1,5 +1,6 @@
 # PokemonDisplay
 Goal:
+
 Using Combine to restore, resume, track the downloading progress of large amount of pokemon infos(including pictures) from the pokemon open API
 
 Create cache system able to restore the app after user kills the app
