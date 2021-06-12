@@ -14,7 +14,7 @@ enum StateCenterSubType: Hashable, CaseIterable{
 
 
 class StateCenter: ObservableObject {
-    @Published var appState = AppState()
+    @Published var appState = AppStates()
     
     var subscriptions = [StateCenterSubType : Set<AnyCancellable>]()
     
@@ -39,25 +39,39 @@ class StateCenter: ObservableObject {
         }
     }
     
-    private func reduce(state: AppState, action: AppAction) -> (newState: AppState, newCommand: AppCommand?) {
+    private func reduce(state: AppStates, action: AppAction) -> (newState: AppStates, newCommand: AppCommand?) {
         var appState = state
         var appCommand: AppCommand? = nil
         
         switch action {
         case .reloadAllPokemons(let range) :
             if appState.pokemonListState.currentlyLoadingPokemons {
-                print("load brake")
+                print("[ACTION] load break in reload all")
                 break
             }
-            appState.pokemonListState.pokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound)
+            appState.pokemonListState.targetPokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound)
             appState.pokemonListState.pokemonsDic = nil
             appState.pokemonListState.currentlyLoadingPokemons = true
             appState.pokemonListState.loadPokemonError = nil
-            appCommand = reloadALLPokemonsCommand(closedIndexRange: range)
+            appCommand = ReloadALLPokemonsCommand(closedIndexRange: range)
             
         case .loadSelectedPokemons(let indexSet):
-            print(indexSet)
-            break
+            guard !appState.pokemonListState.currentlyLoadingPokemons else {
+                print("[ACTION] load break in load missing")
+                break
+            }
+            
+            guard let targetRange = appState.pokemonListState.targetPokemonRange,
+                  let indexSet = indexSet,
+                  Set((targetRange.lowerBound...targetRange.upperInclusiveBound)).isStrictSuperset(of: indexSet) else {
+                appState.pokemonListState.loadPokemonError = .selectedIndexNotInRange(index: indexSet?.first)
+                break
+            }
+            
+            appState.pokemonListState.currentlyLoadingPokemons = true
+            appState.pokemonListState.loadPokemonError = nil
+            appCommand = LoadSelectedPokemonsCommand(selectedIndexesSet: indexSet)
+            
             
         case let .receivedPokemons( result, isFinished):
             appState.pokemonListState.currentlyLoadingPokemons = !isFinished

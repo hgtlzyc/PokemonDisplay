@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct  PokemonListStateTracker: StateProgressTrackable {
+struct  PokemonListProgressTracker: ProgressTrackable {
     typealias ValueType = Int
     
     var lowerValueBound: Int

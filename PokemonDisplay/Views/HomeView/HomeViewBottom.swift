@@ -10,6 +10,9 @@ import SwiftUI
 struct HomeViewBottom: View {
     @ObservedObject var stateCenter: StateCenter
     @Binding var range: ClosedRange<Int>
+    
+    let cornerRadius = 12.0
+    
     var body: some View {
         HStack{
             let isLoading = stateCenter.appState.pokemonListState.currentlyLoadingPokemons
@@ -22,10 +25,9 @@ struct HomeViewBottom: View {
                     .frame(width: 100, height: 50, alignment: .center)
                     .background(Color(isLoading ? .red : .blue).opacity(0.2))
             })
+            .cornerRadius(CGFloat(cornerRadius))
             
             
-
-
             if isLoading {
                 Button(action: {
                     stateCenter.executeAction(.cancelPokemonLoading)
@@ -34,6 +36,8 @@ struct HomeViewBottom: View {
                         .frame(width: 150, height: 50, alignment: .center)
                         .background(Color(.red).opacity(0.5))
                 })
+                .cornerRadius(CGFloat(cornerRadius))
+                .padding(.leading)
             }
             
             if !isLoading && !isListEmpty{
@@ -41,9 +45,11 @@ struct HomeViewBottom: View {
                     stateCenter.executeAction(.deletePokemonCache)
                 }, label: {
                     Text("Clear Cache")
-                        .frame(width: 100, height: 50, alignment: .center)
+                        .frame(width: 120, height: 50, alignment: .center)
                         .background(Color(.red).opacity(0.5))
                 })
+                .cornerRadius(CGFloat(cornerRadius))
+                .padding(.leading)
                 .disabled( isLoading && !isListEmpty)
                 
             }

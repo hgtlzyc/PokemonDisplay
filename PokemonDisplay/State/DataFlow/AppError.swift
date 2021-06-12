@@ -9,11 +9,14 @@ import Foundation
 
 enum AppError: Error {
     
+    //Status Related
+    case selectedIndexNotInRange(index: Int?)
     
     //Subscriptions
     case subscriptionCancelled
     
     //Network Related
+    case unableInitiateProcessor(String?)
     case networkError(Error)
     
     //FileStorage Related

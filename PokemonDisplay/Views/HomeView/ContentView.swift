@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var stateCenter: StateCenter
-    
     @State var range: ClosedRange<Int> = (1...100)
     
     var body: some View {
@@ -19,26 +18,40 @@ struct ContentView: View {
                     ForEach(stateCenter.appState.pokemonListState.sortdPokemonList) { viewModel in
                         Text(viewModel.name)
                     }
-                }
-            }
-            .animation(.easeIn)
-            
-            let listState = stateCenter.appState.pokemonListState
-            
-            if let indexSet = listState.missingIndexSet {
-                Text("\(indexSet.count)")
-            }
-            
-            if let progress = listState.currentLoadProgress {
-                if let text = listState.progressTextString {
-                    Text(text)
+                    .animation(.easeInOut)
                 }
                 
+            }
+            
+            
+            let listState = stateCenter.appState.pokemonListState
+                        
+            if let progress = listState.currentLoadProgress {
+                if let percentString = listState.progressTextString{
+                    Text(percentString)
+                }
                 if listState.shouldShowProgressBar {
                     ProgressBar(value: progress)
                             .padding(.horizontal)
                             .frame(height: 10)
                 }
+            }
+            
+            if let loadMissingString = listState.loadMissingButtonString {
+                Button(
+                    action: {
+                        stateCenter.executeAction(.loadSelectedPokemons(withIndexSet:
+                                listState.missingIndexSet
+                            )
+                        )
+                    }, label: {
+                        Text(loadMissingString)
+                            .padding()
+                            .background(Color.orange.opacity(0.4))
+                        
+                    }
+                )
+                .cornerRadius(12.0)
             }
             
             HomeViewBottom(stateCenter: stateCenter, range: $range).padding()
