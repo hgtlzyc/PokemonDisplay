@@ -10,10 +10,9 @@ import Foundation
 struct PokemonDataModel: Codable {
     struct PokemonAPIResult: Codable {
         let name: String
-        let url: String
+        let url:String
     }
     
-    let count: Int
-    let results: PokemonAPIResult
+    let results: [PokemonAPIResult]
     
 }

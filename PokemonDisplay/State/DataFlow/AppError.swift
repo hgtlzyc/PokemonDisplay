@@ -17,6 +17,7 @@ enum AppError: Error {
     
     //Network Related
     case unableInitiateProcessor(String?)
+    case inValidURL(String)
     case networkError(Error)
     
     //FileStorage Related

@@ -22,13 +22,11 @@ class StateCenter: ObservableObject {
         cancelAndResetSubscritions(types: StateCenterSubType.allCases)
     }
     
-    
     func executeAction(_ action: AppAction) {
-       // print("[action] start \(action)")
+        print(action)
         let result = self.reduce(state: self.appState, action: action)
         self.appState = result.newState
         guard let command = result.newCommand else { return }
-       // print("[command] start command \(command)")
         command.execute(in: self)
     }
     

@@ -21,9 +21,15 @@ struct ReloadALLPokemonsCommand: AppCommand {
         
         switch kCurrentEnvironment.networkEnvironment{
         case .realAPI:
-            break
+            if let processor = PokemonLoadingPressor(controlled: true, maxTasks: 1, delayInSeconds: 0) {
+                processor.process(in: stateCenter, targetRange: closedIndexRange, reloadAll: true)
+            } else {
+                stateCenter.appState.pokemonListState.loadPokemonError = .unableInitiateProcessor("unable initiate Simulator in reload all command")
+                print("unable Load pressor")
+            }
+            
         case .simulator:
-            if let processor = SimulatorPokemonLoadingProcess(maxTasks: 2, delay: 0.2) {
+            if let processor = SimulatorPokemonLoadingProcess(maxTasks: 2, delayInSeconds: 0.2) {
                 processor.process(in: stateCenter, sourceCollection: closedIndexRange, reloadAll: true)
             } else {
                 stateCenter.appState.pokemonListState.loadPokemonError = .unableInitiateProcessor("unable initiate Simulator in reload all command")
@@ -42,7 +48,7 @@ struct LoadSelectedPokemonsCommand: AppCommand {
         case .realAPI:
             break
         case .simulator:
-            if let processor = SimulatorPokemonLoadingProcess(maxTasks: 2, delay: 0.2) {
+            if let processor = SimulatorPokemonLoadingProcess(maxTasks: 2, delayInSeconds: 0.2) {
                 processor.process(in: stateCenter, sourceCollection: selectedIndexesSet, reloadAll: false )
             } else {
                 stateCenter.appState.pokemonListState.loadPokemonError = .unableInitiateProcessor("unable initiate Simulator in load selected command")
