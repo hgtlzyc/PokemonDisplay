@@ -59,15 +59,15 @@ struct PokemonListState {
     //progress bar related
     var progressTextString: String? {
         guard let progress = currentLoadProgress else { return nil }
-        let percent = progress * 100 + 1.0
+        let percent = progress * 100
         switch percent {
-        case let x where x == 101.0:
+        case let x where x == 100.0:
             guard let lower = targetPokemonRange?.lowerBound,
                   let upper = targetPokemonRange?.upperInclusiveBound else {
                 return nil
             }
             return "\(lower) to \(upper) All Loaded"
-        case let x where x == 1.0:
+        case let x where x <= 0.0:
             return nil
         default:
             return String(Int(percent)) + "%"

@@ -23,7 +23,7 @@ class StateCenter: ObservableObject {
     }
     
     func executeAction(_ action: AppAction) {
-        print(action)
+        //print(action)
         let result = self.reduce(state: self.appState, action: action)
         self.appState = result.newState
         guard let command = result.newCommand else { return }
@@ -44,7 +44,7 @@ class StateCenter: ObservableObject {
         switch action {
         case .reloadAllPokemons(let range) :
             if appState.pokemonListState.currentlyLoadingPokemons {
-                print("[ACTION] load break in reload all")
+                //print("[ACTION] load break in reload all")
                 break
             }
             appState.pokemonListState.targetPokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound)

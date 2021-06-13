@@ -13,7 +13,7 @@ struct  PokemonListProgressTracker: ProgressTrackable {
     
     var lowerValueBound: Int
     var upperInclusiveBound: Int
-    var currentListCount: Int
+    var currentListValue: Int
     
     init?(_ lowerBound: Int?, _ upperInclusiveBound: Int?, _ currentCount: Int?) {
         guard let lowerBound = lowerBound, let upperBound = upperInclusiveBound, let currentCount = currentCount else {
@@ -23,7 +23,8 @@ struct  PokemonListProgressTracker: ProgressTrackable {
             print("[TRACKER] pokemon bound error")
             return nil
         }
-        guard currentCount >= 0, (lowerBound...upperBound).contains(currentCount) else {
+        guard currentCount >= 0, (lowerBound...upperBound + 1).contains(lowerBound + currentCount) else {
+            print(lowerBound, currentCount, upperBound)
             print("[TRACKER] pokemon currentCount error")
             return nil
         }
@@ -31,13 +32,13 @@ struct  PokemonListProgressTracker: ProgressTrackable {
         self.lowerValueBound = lowerBound
         self.upperInclusiveBound = upperBound
         
-        self.currentListCount = currentCount
+        self.currentListValue = lowerBound + currentCount
         
     }
     
     var currentProgress: Double? {
-        let valueDistance = upperInclusiveBound - lowerValueBound
+        let valueDistance = upperInclusiveBound - lowerValueBound + 1
         guard valueDistance > 0 else { return nil }
-        return  Double(currentListCount - lowerValueBound) / Double(valueDistance)
+        return  Double(currentListValue) / Double(valueDistance)
     }
 }
