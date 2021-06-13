@@ -78,7 +78,7 @@ class StateCenter: ObservableObject {
             guard let result = result else { break }
             switch result {
             case .failure(let error):
-                print(error)
+                print(error, Date().description(with: .current))
                 appState.pokemonListState.loadPokemonError = error
             case .success(let pokemonViewModelDic):
                 appState.pokemonListState.pokemonsDic = pokemonViewModelDic
