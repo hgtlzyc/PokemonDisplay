@@ -1,6 +1,7 @@
 # PokemonDisplay
 
 Screen recording updated 06/12/21
+
 ![](https://github.com/hgtlzyc/PokemonDisplay/blob/99fd7397d76256791cba809eab76cc8dcbcec4f7/screenRecording.gif)
 
 Goal:
