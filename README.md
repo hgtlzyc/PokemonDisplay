@@ -1,4 +1,7 @@
 # PokemonDisplay
+
+![](https://github.com/hgtlzyc/PokemonDisplay/blob/99fd7397d76256791cba809eab76cc8dcbcec4f7/screenRecording.gif)
+
 Goal:
 
 Using Combine to restore, resume, track the downloading progress of large amount of pokemon infos(including pictures) from the pokemon open API
