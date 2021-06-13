@@ -7,29 +7,30 @@ import Combine
 */
 
 //Make tasks trackable, nonblocking and individually cancelable with generics and protocols
+
+
 typealias CancelableIntTaskType = CancelableTask<AnyPublisher<Int, Never>>
 var cancelableIntTasks = CancelableIntTaskType()
-var taskIdArray = [UUID?]()
 
-taskIdArray = [
+let taskIdArray = [
     startFizzBuzzTask(50, -80, &cancelableIntTasks),
-    startFizzBuzzTask(100, 200, &cancelableIntTasks),
+    startOddEvenTask(600, 1000, &cancelableIntTasks),
     startFizzBuzzTask(600, 1000, &cancelableIntTasks),
+    startOddEvenTask(600, 1000, &cancelableIntTasks),
     startFizzBuzzTask(2000, 2600, &cancelableIntTasks)
 ]
 
 checkAllTasksStarted(taskIdArray)
 
-DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
     if let id = taskIdArray.compactMap({$0}).first {
         cancelableIntTasks.cancelTaskWithID(id)
     }
 }
 
-DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
     cancelableIntTasks.cancelAll()
 }
-
 
 
 //outputs
@@ -66,34 +67,60 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
 //**744 canceled at 2058 progress: 10.0%
 //**A8A canceled at 656 progress: 15.0%
 
-//Fizzbuzz Task related
-func startFizzBuzzTask(_ fromIndex: Int,_ toIndex: Int,_ tasksContainer: inout CancelableIntTaskType) -> UUID?{
+//Task related
+func generateIntInRangePublisher(_ fromIndex: Int,_ toIndex: Int) -> AnyPublisher<Int, Never> {
+    Array<Int>(fromIndex ..< toIndex).publisher
+        .eraseToAnyPublisher()
+}
+
+
+func startOddEvenTask(_ fromIndex: Int,_ toIndex: Int,_ tasksContainer: inout CancelableIntTaskType) -> UUID? {
     guard toIndex > fromIndex else { return nil}
     let id = UUID()
-    let tracker = FizzBuzzProgressTracker(fromIndex, toIndex, uuid: id)
+    let tracker = IntInRangeProgressTracker(fromIndex, toIndex, uuid: id)
     
     tasksContainer.startTask(
         taskPublisher: generateIntInRangePublisher(fromIndex, toIndex),
         tracker: tracker,
-        displayHelper: fizzBuzzDisplayHelper()
+        displayHelper: OddEvenDisplayHelper()
     ) { result in
         switch result {
         case .failure(let printerError):
             print(printerError.description)
         case .success(let finishedIndex):
-            print("finished at \(finishedIndex)")
+            print("Odd Even finished at \(finishedIndex)")
         }
     }
     
     return id
 }
 
-func generateIntInRangePublisher(_ fromIndex: Int,_ toIndex: Int) -> AnyPublisher<Int, Never> {
-    Array<Int>(fromIndex ..< toIndex).publisher
-        .eraseToAnyPublisher()
+
+
+
+
+func startFizzBuzzTask(_ fromIndex: Int,_ toIndex: Int,_ tasksContainer: inout CancelableIntTaskType) -> UUID?{
+    guard toIndex > fromIndex else { return nil}
+    let id = UUID()
+    let tracker = IntInRangeProgressTracker(fromIndex, toIndex, uuid: id)
+    
+    tasksContainer.startTask(
+        taskPublisher: generateIntInRangePublisher(fromIndex, toIndex),
+        tracker: tracker,
+        displayHelper: FizzBuzzDisplayHelper()
+    ) { result in
+        switch result {
+        case .failure(let printerError):
+            print(printerError.description)
+        case .success(let finishedIndex):
+            print("FizzBuzz finished at \(finishedIndex)")
+        }
+    }
+    
+    return id
 }
 
-struct FizzBuzzProgressTracker: ProgressIndicable {
+struct IntInRangeProgressTracker: ProgressIndicable {
     var uuid: UUID
     let startValue: Int
     let toValue: Int
@@ -113,10 +140,11 @@ struct FizzBuzzProgressTracker: ProgressIndicable {
 }
 
 //Generic CancelableTask Container related
-struct CancelableTask<P: Publisher>{
+
+class CancelableTask<P: Publisher>{
     private var subscriptions = [UUID : AnyCancellable]()
     //tracker’s associated type restricted to match publisher’s output type
-    mutating func startTask<T: ProgressIndicable> (
+    func startTask<T: ProgressIndicable> (
         taskPublisher: P,
         tracker: T,
         displayHelper: CancelableTaskDisplayHelper? = nil,
@@ -124,7 +152,12 @@ struct CancelableTask<P: Publisher>{
     ) -> Void where P.Output == T.ValueType {
         var tracker = tracker
         let id = tracker.uuid.uuidString.prefix(3)
+        
+        //slow down for testing
         let cancelableToken = taskPublisher
+            .flatMap(maxPublishers: .max(1)) { val in
+                Just(val).delay(for: .seconds(0.1), scheduler: DispatchQueue.main)
+            }
             .subscribe(on: DispatchQueue.global(qos: .background))
             .handleEvents(
                 receiveSubscription: { _ in
@@ -164,7 +197,7 @@ struct CancelableTask<P: Publisher>{
     }
     
     @discardableResult
-    mutating func cancelTaskWithID(_ id: UUID) -> Bool{
+    func cancelTaskWithID(_ id: UUID) -> Bool{
         if let task = subscriptions[id] {
             task.cancel()
             subscriptions.removeValue(forKey: id) != nil
@@ -173,7 +206,7 @@ struct CancelableTask<P: Publisher>{
         return false
     }
     
-    mutating func cancelAll() {
+    func cancelAll() {
         subscriptions.forEach{ $0.value.cancel()}
     }
 }
@@ -247,35 +280,69 @@ protocol CancelableTaskDisplayHelper {
    func stringBasedOnTrackerEvent<T: ProgressIndicable> (_ tracker: T, _ eventType: TrackerEvent, _ prefix: Int) -> String?
 }
 
-struct fizzBuzzDisplayHelper: CancelableTaskDisplayHelper {
+struct OddEvenDisplayHelper: CancelableTaskDisplayHelper {
     
     func stringBasedOnTrackerEvent<T: ProgressIndicable> (_ tracker: T, _ eventType: TrackerEvent, _ prefix: Int ) -> String? {
         guard prefix > 0 else { return "id displayPrefix error"}
         
         let displayID = tracker.uuid.uuidString.prefix(prefix)
         
+        var str = "/Odd Even/ "
+        
         switch eventType {
         case .started:
-            return "*id " + displayID + " started"
+            return str + "*id " + displayID + " STARTED"
         case .updateCurrent:
             guard let number = tracker.currentValue as? Int else {
-                return "id:" + displayID + " val: \(tracker.currentValue)"
+                return str + "id:" + displayID + " val: \(tracker.currentValue)"
                     + " progress \(tracker.currentProgress.rounded(.up))%"
             }
-            var str = ""
+            switch number.isMultiple(of: 2) {
+            case true:
+                str += "id \(displayID) Even at \(number)"
+            case false:
+                str += "id \(displayID) Odd at \(number)"
+            }
+            return str + " progress \(tracker.currentProgress.rounded(.up))%"
+        case .canceled:
+            return str + "**\(displayID) CANCELED at \(tracker.currentValue)"
+                + " progress: \(tracker.currentProgress.rounded(.up))%"
+        }
+        
+    }
+}
+
+
+
+struct FizzBuzzDisplayHelper: CancelableTaskDisplayHelper {
+    
+    func stringBasedOnTrackerEvent<T: ProgressIndicable> (_ tracker: T, _ eventType: TrackerEvent, _ prefix: Int ) -> String? {
+        guard prefix > 0 else { return "id displayPrefix error"}
+        
+        let displayID = tracker.uuid.uuidString.prefix(prefix)
+        var str = "/FizzBuzz/ "
+        
+        switch eventType {
+        case .started:
+            return str + "*id " + displayID + " STARTED"
+        case .updateCurrent:
+            guard let number = tracker.currentValue as? Int else {
+                return str + "id:" + displayID + " val: \(tracker.currentValue)"
+                    + " progress \(tracker.currentProgress.rounded(.up))%"
+            }
             switch (number.isMultiple(of: 3), number.isMultiple(of: 5) ) {
             case (true, true):
-                str = "id \(displayID) fizzbuzz at \(number)"
+                str += "id \(displayID) fizzbuzz at \(number)"
             case (true, false):
-                str = "id \(displayID) fizz at \(number)"
+                str += "id \(displayID) fizz at \(number)"
             case (false, true):
-                str = "id \(displayID) buzz at \(number)"
+                str += "id \(displayID) buzz at \(number)"
             case (false, false):
                 return nil
             }
             return str + " progress \(tracker.currentProgress.rounded(.up))%"
         case .canceled:
-            return "**\(displayID) canceled at \(tracker.currentValue)"
+            return str + "**\(displayID) CANCELED at \(tracker.currentValue)"
                 + " progress: \(tracker.currentProgress.rounded(.up))%"
         }
         
