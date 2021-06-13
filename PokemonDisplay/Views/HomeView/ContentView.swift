@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var stateCenter: StateCenter
-    @State var range: ClosedRange<Int> = (0...99)
+    @State var range: ClosedRange<Int> = (100...199)
     
     var body: some View {
         VStack{
