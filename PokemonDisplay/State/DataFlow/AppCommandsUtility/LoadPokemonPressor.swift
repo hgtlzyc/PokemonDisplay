@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 
-//Will be reconstructed for network calls in the end
-struct PokemonLoadingProcessSimulator{
+//For Testing
+struct SimulatorPokemonLoadingProcess{
     let maxTasks: Int
     let delayInSeconds: Double
     

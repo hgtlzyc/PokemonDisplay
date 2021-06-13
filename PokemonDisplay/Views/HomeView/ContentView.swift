@@ -21,7 +21,7 @@ struct ContentView: View {
                     }
                     
                 }
-                .animation(.easeInOut)
+                .animation(.easeIn)
                 
             }
             
