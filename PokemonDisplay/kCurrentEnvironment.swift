@@ -13,5 +13,5 @@ struct kCurrentEnvironment {
         case simulator
         case realAPI
     }
-    static let networkEnvironment: kDevelopmentEnvironment = .realAPI
+    static let networkEnvironment: kDevelopmentEnvironment = .simulator
 }

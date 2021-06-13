@@ -33,59 +33,6 @@ struct PokemonLoadingPressor {
     func process (in stateCenter: StateCenter, targetRange: ClosedRange<Int>, reloadAll: Bool) -> Void {
         let urlRangeBaseString = kAPIURLs.urlBaseForRangeOfPokemons(limit: targetRange.count, offset: targetRange.lowerBound)
         
-        if reloadAll == false, let currentBaseDic = stateCenter.appState.pokemonListState.pokemonsDic {
-            baseArray = currentBaseDic.map{($0, $1.name ?? "no name")}
-        }
-        
-        //simulates indivual API calls
-        let passThrough = PassthroughSubject<PokemonDataModel.PokemonAPIResult,Never>()
-        
-        do {
-            let publisher = try generatePokemonResultsPublisher(urlRangeBaseString)
-            publisher
-                .handleEvents(receiveCancel: {
-                    stateCenter.executeAction(
-                        .receivedPokemons(
-                            .failure(.subscriptionCancelled),
-                            isFinished: true
-                        )
-                    )
-                })
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        passThrough.send(completion: .finished)
-                    case .failure(let error):
-                        stateCenter.executeAction(
-                            .receivedPokemons(
-                                .failure(.networkError(error)),
-                                isFinished: true
-                            )
-                        )
-                    }
-                } receiveValue: { array in
-                    print(array.count)
-                    array.forEach { pokemonResult in
-                        passThrough.send(pokemonResult)
-                    }
-                }
-                .store(in: &stateCenter.subscriptions[.loadingPokemon]!)
-        } catch let error {
-            stateCenter.executeAction(.receivedPokemons(.failure(.networkError(error)), isFinished: true))
-        }
-        
-        passThrough
-            .flatMap(maxPublishers: .max(maxTasks ?? 1)) { result in
-                Just(result).delay(for: .seconds(delayInSeconds ?? 0), scheduler: DispatchQueue(label: result.url))
-            }
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .scan(baseArray) { $0 + [$1] }
-            .receive(on: DispatchQueue.main)
-            
-            
-            
-        
-        
         
     }
     
@@ -94,7 +41,7 @@ struct PokemonLoadingPressor {
             
     }
     
-    private func generatePokemonResultsPublisher(_ urlString: String) throws -> AnyPublisher<[PokemonDataModel.PokemonAPIResult], AppError> {
+    private func generatePokemonResultsPublisher(_ urlString: String) throws -> AnyPublisher<PokemonDataModel, AppError> {
         guard let url = URL(string: urlString) else {
             throw AppError.inValidURL("invaild url: \(urlString)")
         }
@@ -102,7 +49,6 @@ struct PokemonLoadingPressor {
             .dataTaskPublisher(for: url)
             .map{$0.data}
             .decode(type: PokemonDataModel.self, decoder: FileHelper.appDecoder)
-            .map {$0.results}
             .mapError{ AppError.networkError($0) }
             .eraseToAnyPublisher()
     }
@@ -163,9 +109,7 @@ struct SimulatorPokemonLoadingProcess {
                         PokemonViewModel(
                             id: nextTuple.0,
                             pokemonDataModel:
-                                PokemonDataModel(
-                                     results: [PokemonDataModel.PokemonAPIResult(name: nextTuple.1, url: nextTuple.1)]
-                                )
+                                PokemonDataModel(id: nextTuple.0, species: PokemonDataModel.SpeciesContainer(name: nextTuple.1, url: "n"))
                         )
                 }
                 

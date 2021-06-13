@@ -16,7 +16,7 @@ struct PokemonViewModel: Identifiable, Codable {
     let pokemonDataModel: PokemonDataModel
     
     var name: String? {
-        pokemonDataModel.results.first?.name
+        pokemonDataModel.species.name
     }
     
 }

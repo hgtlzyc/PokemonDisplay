@@ -8,11 +8,13 @@
 import Foundation
 
 struct PokemonDataModel: Codable {
-    struct PokemonAPIResult: Codable {
-        let name: String
-        let url:String
-    }
+    let id: Int
     
-    let results: [PokemonAPIResult]
+    let species: SpeciesContainer
+    
+    struct SpeciesContainer: Codable {
+        let name: String
+        let url: String
+    }
     
 }
