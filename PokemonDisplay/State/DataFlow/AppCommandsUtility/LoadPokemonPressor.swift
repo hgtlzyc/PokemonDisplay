@@ -57,7 +57,7 @@ struct PokemonLoadingProcessSimulator{
                 }
             }, receiveValue: { tupleArray in
                 let viewModelDic = tupleArray.reduce(into: [Int: PokemonViewModel]()) { result, nextTuple in
-                    result[nextTuple.0] = PokemonViewModel(dataModel: PokemonDataModel(id: nextTuple.0, name: nextTuple.1))
+                    result[nextTuple.0] = PokemonViewModel(id: nextTuple.0, pokemonDataModel: PokemonDataModel(count: 1350, results: PokemonDataModel.PokemonAPIResult(name: nextTuple.1, url: nextTuple.1)))
                 }
                 
                 stateCenter.executeAction(

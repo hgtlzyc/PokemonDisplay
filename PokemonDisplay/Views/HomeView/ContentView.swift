@@ -16,10 +16,12 @@ struct ContentView: View {
             ScrollView{
                 LazyVStack{
                     ForEach(stateCenter.appState.pokemonListState.sortdPokemonList) { viewModel in
-                        Text(viewModel.name)
+                        Text(viewModel.name).id(UUID())
+                            
                     }
-                    .animation(.easeInOut)
+                    
                 }
+                .animation(.easeInOut)
                 
             }
             

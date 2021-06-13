@@ -8,6 +8,12 @@
 import Foundation
 
 struct PokemonDataModel: Codable {
-    let id: Int
-    let name: String
+    struct PokemonAPIResult: Codable {
+        let name: String
+        let url: String
+    }
+    
+    let count: Int
+    let results: PokemonAPIResult
+    
 }
