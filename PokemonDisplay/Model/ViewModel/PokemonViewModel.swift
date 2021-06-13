@@ -9,14 +9,17 @@ import SwiftUI
 
 
 struct PokemonViewModel: Identifiable, Codable {
-    //Values
-    let id: Int
+    
+    var id: Int {
+        pokemonDataModel.id
+    }
+    
+    var name: String {
+        pokemonDataModel.species.name
+    }
     
     //Data
     let pokemonDataModel: PokemonDataModel
     
-    var name: String? {
-        pokemonDataModel.species.name
-    }
     
 }

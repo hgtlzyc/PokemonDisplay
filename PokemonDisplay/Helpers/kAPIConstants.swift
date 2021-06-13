@@ -8,12 +8,12 @@
 import Foundation
 
 
-struct kAPIURLs{
+struct kAPIConstants{
     
     static let maxBackPressureLimit: Int = 100
     
     static func urlBaseForSinglePokemon(index: Int) -> String {
-        return "https://pokeapi.co/api/v2/pokemon?limit=1&offset=\(index)"
+        return "https://pokeapi.co/api/v2/pokemon/\(index)"
     }
     
     static func urlBaseForRangeOfPokemons(limit: Int, offset: Int) -> String {

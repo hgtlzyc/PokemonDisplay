@@ -9,14 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var stateCenter: StateCenter
-    @State var range: ClosedRange<Int> = (100...199)
+    @State var range: ClosedRange<Int> = (1...30)
     
     var body: some View {
         VStack{
             ScrollView{
                 LazyVStack{
                     ForEach(stateCenter.appState.pokemonListState.sortdPokemonList) { viewModel in
-                        Text(viewModel.name ?? "no name")
+                        Text("\(viewModel.id)  " + viewModel.name)
                             
                             
                     }
