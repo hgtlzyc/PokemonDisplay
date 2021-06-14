@@ -1,12 +1,12 @@
 # PokemonDisplay
 
-Screen recording updated 06/13/21
+Screen recording updated 06/13/21, calling API "https://pokeapi.co/api/v2/pokemon/\(id)"
 
-![](https://github.com/hgtlzyc/PokemonDisplay/blob/cfad6d11ec3aee5c087aa67e1d6a83806d66d882/screenRecording.gif)
+![](https://github.com/hgtlzyc/PokemonDisplay/blob/4ffce5e0f32402e0a7e11b531d82bbb998faf196/screenRecording.gif)
 
 
 
- used flatMap to limit the calls to API, maxTasks set to 1 and delay set to 0.1s
+ used flatMap to limit the calls to API, maxTasks set to 1 and delay set to 0.1s, 
 
             .flatMap(maxPublishers: .max(maxTasks)) { urlString -> AnyPublisher<PokemonDataModel, AppError> in
                 do {
@@ -20,6 +20,8 @@ Screen recording updated 06/13/21
                 }
             }
 
+*** 
+change the networkEnvironment: kDevelopmentEnvironment = .realAPI to .simulator, to protect the public API 
 
 
 Goal:
