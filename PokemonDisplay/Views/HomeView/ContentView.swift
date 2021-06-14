@@ -31,7 +31,7 @@ struct ContentView: View {
                     Text(percentString)
                 }
                 if listState.shouldShowProgressBar {
-                    ProgressBar(value: progress)
+                    ProgressView(value: progress)
                             .padding(.horizontal)
                             .frame(height: 10)
                 }
