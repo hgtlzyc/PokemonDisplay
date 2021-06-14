@@ -33,7 +33,8 @@ struct ContentView: View {
             
             //UI not refined will finish later
             let listState = stateCenter.appState.pokemonListState
-                        
+            
+            //MARK: progress bar
             if let progress = listState.currentLoadProgress {
                 if let percentString = listState.progressTextString{
                     Text(percentString)
@@ -45,6 +46,7 @@ struct ContentView: View {
                 }
             }
             
+            //MARK: - Load Missing
             if let loadMissingString = listState.loadMissingButtonString {
                 Button(
                     action: {
@@ -54,7 +56,9 @@ struct ContentView: View {
                         )
                     }, label: {
                         Text(loadMissingString)
+                            .font(.system(.body))
                             .padding()
+                            .lineLimit(1)
                             .background(Color.orange.opacity(0.4))
                         
                     }
@@ -74,6 +78,8 @@ struct ContentView: View {
                 }
                 .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
             }
+            
+            //MARK: reload
             
             HomeViewBottom(stateCenter: stateCenter, range: (1...listState.upperPokemonsLimit) ).padding()
         }

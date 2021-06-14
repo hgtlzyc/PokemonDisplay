@@ -49,7 +49,7 @@ struct PokemonListState {
         case nil :
             return nil
         default:
-            return "Click HERE to Load the missing \(missingSet.count) Pokemons" 
+            return "Click to Load the missing \(missingSet.count) Pokemons" 
         }
     }
     
