@@ -2,7 +2,7 @@
 
 Screen recording updated 06/12/21
 
-![](https://github.com/hgtlzyc/PokemonDisplay/blob/4731e9fbb442a3df828e1199d13f256eff982f5c/screenRecording.gif)
+![](https://github.com/hgtlzyc/PokemonDisplay/blob/077e355ec85d54af01e74c69ddd843bfeb3cde61/screenRecording.gif)
 
 Goal:
 
