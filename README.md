@@ -1,8 +1,8 @@
 # PokemonDisplay
 
-Screen recording updated 06/13/21, calling API "https://pokeapi.co/api/v2/pokemon/\(id)"
+Screen recording updated 06/14/21, calling API "https://pokeapi.co/api/v2/pokemon/\(id)"
 
-![](https://github.com/hgtlzyc/PokemonDisplay/blob/4ffce5e0f32402e0a7e11b531d82bbb998faf196/screenRecording.gif)
+![](https://github.com/hgtlzyc/PokemonDisplay/blob/7bb958f1765dcd28b56d72df935ce6e643c429a7/screenRecording.gif)
 
 
 
@@ -36,6 +36,7 @@ Able to open by URLs and set the app to corresponding status
 
 
 Currently achieved:
+06/14/21 display images from API
 
 06/13/21 request data from the Pokemon API https://pokeapi.co/ + use stepper to set the target range upper index
 
@@ -49,7 +50,7 @@ Currently achieved:
 
 Next:
 
-improve UI + load images
+improve UI + Able to open by URLs and set the app to corresponding status
 
 
 Background:
