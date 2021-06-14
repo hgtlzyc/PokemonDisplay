@@ -87,7 +87,7 @@ struct PokemonListState {
     
     var currentLoadProgress: Double? {
         get{
-            return PokemonListProgressTracker(targetPokemonRange?.lowerBound, targetPokemonRange?.upperInclusiveBound, currentPokemonsCount)?.currentProgress
+            return PokemonListProgressTracker(targetPokemonRange?.lowerBound, targetPokemonRange?.upperInclusiveBound, sortedAndFilteredPokemonList.count)?.currentProgress
         }
     }
     
@@ -116,7 +116,7 @@ struct PokemonListState {
         }
     }
     
-    var sortedPokemonList: [PokemonViewModel] {
+    var sortedAndFilteredPokemonList: [PokemonViewModel] {
         guard let pokemonDic = pokemonsDic else { return [] }
         let sortedList = pokemonDic.keys.sorted(by: < ).reduce(into: []) { $0 = $0 + [pokemonDic[$1]!] }
         guard let lowerBound = targetPokemonRange?.lowerBound,

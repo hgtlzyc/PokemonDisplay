@@ -10,8 +10,13 @@ import Foundation
 struct PokemonDataModel: Codable {
     let id: Int
     let species: SpeciesContainer
+    let sprites: SpritesContainer
     
-    struct SpeciesContainer: Codable {
+    internal struct SpritesContainer: Codable {
+        let frontDefault: String?
+    }
+    
+    internal struct SpeciesContainer: Codable {
         let name: String
         let url: String
     }

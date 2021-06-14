@@ -23,9 +23,8 @@ struct  PokemonListProgressTracker: ProgressTrackable {
             print("[TRACKER] pokemon bound error")
             return nil
         }
-        guard currentCount >= 0, (lowerBound...upperBound + 1).contains(lowerBound + currentCount) else {
-            print(lowerBound, currentCount, upperBound)
-            print("[TRACKER] pokemon currentCount error")
+        guard currentCount > 0, (lowerBound...upperBound + 1).contains(lowerBound + currentCount) else {
+            //print(lowerBound, currentCount, upperBound)
             return nil
         }
         

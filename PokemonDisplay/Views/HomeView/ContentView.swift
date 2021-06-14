@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ContentView: View {
     @EnvironmentObject var stateCenter: StateCenter
@@ -14,8 +15,16 @@ struct ContentView: View {
         VStack{
             ScrollView{
                 LazyVStack{
-                    ForEach(stateCenter.appState.pokemonListState.sortedPokemonList) { viewModel in
-                        Text("\(viewModel.id)  " + viewModel.name)
+                    ForEach(stateCenter.appState.pokemonListState.sortedAndFilteredPokemonList) { viewModel in
+                        //use Kinfisher for now, might be modify later
+                        HStack {
+                            KFImage(viewModel.imageURL)
+                                .cancelOnDisappear(false)
+                                .loadImmediately()
+                            
+                            Text("\(viewModel.id)  " + viewModel.name)
+                                
+                        }
                     }
                     .animation(.easeIn)
                 }

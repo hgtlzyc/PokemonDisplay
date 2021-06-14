@@ -59,7 +59,8 @@ struct SimulatorPokemonLoadingProcess {
                     result[nextTuple.0] =
                         PokemonViewModel(
                             pokemonDataModel:
-                                PokemonDataModel(id: nextTuple.0, species: PokemonDataModel.SpeciesContainer(name: nextTuple.1, url: "n"))
+                                PokemonDataModel(id: nextTuple.0, species: PokemonDataModel.SpeciesContainer(name: nextTuple.1, url: "n"),
+                                    sprites: PokemonDataModel.SpritesContainer(frontDefault: nil))
                         )
                 }
                 
