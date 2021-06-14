@@ -21,6 +21,8 @@ Screen recording updated 06/13/21, calling API "https://pokeapi.co/api/v2/pokemo
             }
 
 *** 
+
+FOR simple ui testing
 change the networkEnvironment: kDevelopmentEnvironment = .realAPI to .simulator, to protect the public API 
 
 
