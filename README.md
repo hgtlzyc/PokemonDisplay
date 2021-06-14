@@ -21,6 +21,8 @@ Screen recording updated 06/13/21, calling API "https://pokeapi.co/api/v2/pokemo
             }
 
 *** 
+
+FOR simple ui testing
 change the networkEnvironment: kDevelopmentEnvironment = .realAPI to .simulator, to protect the public API 
 
 
@@ -59,3 +61,4 @@ currently I did not find codes showing how to resume/track/restore downloadings 
 so I decided to make my own project/ 
 
 currently looking for entry level iOS developer jobs
+(no experience in a team, but have excellent understanding of Swift, Combine, SwiftUI)
