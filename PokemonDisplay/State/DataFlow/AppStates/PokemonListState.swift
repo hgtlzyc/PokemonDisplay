@@ -111,7 +111,14 @@ struct PokemonListState {
     //calclated data values
     var sortdPokemonList: [PokemonViewModel] {
         guard let pokemonDic = pokemonsDic else { return [] }
-        return pokemonDic.keys.sorted(by: < ).reduce(into: []) { $0 = $0 + [pokemonDic[$1]!] }
+        let sortedList = pokemonDic.keys.sorted(by: < ).reduce(into: []) { $0 = $0 + [pokemonDic[$1]!] }
+        guard let lowerBound = targetPokemonRange?.lowerBound,
+              let higherBound = targetPokemonRange?.upperInclusiveBound else {
+            return sortedList
+        }
+        let sortedAndFilteredList = sortedList.filter{ $0.id <= higherBound && $0.id >= lowerBound }
+        
+        return sortedAndFilteredList
     }
     
     
