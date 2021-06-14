@@ -8,6 +8,6 @@
 import Foundation
 
 struct PokemonIndexRange: Codable {
-    let lowerBound: Int
-    let upperInclusiveBound: Int
+    var lowerBound: Int
+    var upperInclusiveBound: Int
 }

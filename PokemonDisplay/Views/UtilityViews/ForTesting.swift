@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-//for testing
+//Codes below copied from internet or youtube just for prototyping, will be modified or removed in the end
+
+
+//based on youtube video forgot link
 struct ProgressBar: View {
     let value: Double
     

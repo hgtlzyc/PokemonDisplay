@@ -25,9 +25,11 @@ struct PokemonListState {
         return count
     }
     
-    var targetPokensCount: Int? {
-        guard let pokemonRange = targetPokemonRange else { return nil }
-        return (pokemonRange.lowerBound...pokemonRange.upperInclusiveBound).count
+    var upperPokemonsLimit: Int {
+        guard let upperBound = targetPokemonRange?.upperInclusiveBound else {
+            return 30
+        }
+        return upperBound
     }
     
     //load missing related

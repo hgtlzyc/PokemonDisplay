@@ -21,5 +21,4 @@ struct PokemonViewModel: Identifiable, Codable {
     //Data
     let pokemonDataModel: PokemonDataModel
     
-    
 }

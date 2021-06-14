@@ -20,7 +20,7 @@ struct ReloadALLPokemonsCommand: AppCommand {
         
         switch kCurrentEnvironment.networkEnvironment{
         case .realAPI:
-            if let processor = PokemonLoadingPressor(controlled: true, maxTasks: 1, delayInSeconds: 0.1) {
+            if let processor = PokemonLoadingPressor(controlled: true, maxTasks: kCurrentEnvironment.maxTasksBackPressure, delayInSeconds: kCurrentEnvironment.delayInSecondsBackPressure) {
                 processor.process(in: stateCenter, targetRange: closedIndexRange, reloadAll: true)
             } else {
                 stateCenter.appState.pokemonListState.loadPokemonError = .unableInitiateProcessor("unable initiate RealAPI in reload all command")
@@ -45,7 +45,7 @@ struct LoadSelectedPokemonsCommand: AppCommand {
         
         switch kCurrentEnvironment.networkEnvironment{
         case .realAPI:
-            if let processor = PokemonLoadingPressor(controlled: true, maxTasks: 1, delayInSeconds: 0.1) {
+            if let processor = PokemonLoadingPressor(controlled: true, maxTasks: kCurrentEnvironment.maxTasksBackPressure, delayInSeconds: kCurrentEnvironment.delayInSecondsBackPressure) {
                 processor.process(in: stateCenter, selectedSet: selectedIndexesSet, reloadAll: false)
             } else {
                 stateCenter.appState.pokemonListState.loadPokemonError = .unableInitiateProcessor("unable initiate realAPI in reload all command")

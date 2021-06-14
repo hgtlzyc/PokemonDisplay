@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var stateCenter: StateCenter
-    @State var range: ClosedRange<Int> = (1...30)
-    
+
     var body: some View {
         VStack{
             ScrollView{
@@ -24,8 +23,7 @@ struct ContentView: View {
                 }
                 
             }
-            
-            
+            //UI not refined will finish later
             let listState = stateCenter.appState.pokemonListState
                         
             if let progress = listState.currentLoadProgress {
@@ -55,9 +53,23 @@ struct ContentView: View {
                 )
                 .cornerRadius(12.0)
             }
+            if !listState.currentlyLoadingPokemons {
+                HStack{
+                    let upperIndex = listState.upperPokemonsLimit
+                    Text("up to index \(upperIndex)")
+                    Stepper("") {
+                        stateCenter.appState.pokemonListState.targetPokemonRange?.upperInclusiveBound += 1
+                    } onDecrement: {
+                        stateCenter.appState.pokemonListState.targetPokemonRange?.upperInclusiveBound -= 1
+                    }
+                    
+                }
+                .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
+            }
             
-            HomeViewBottom(stateCenter: stateCenter, range: $range).padding()
+            HomeViewBottom(stateCenter: stateCenter, range: (1...listState.upperPokemonsLimit) ).padding()
         }
+        .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }
 

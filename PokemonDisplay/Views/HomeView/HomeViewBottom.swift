@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeViewBottom: View {
     @ObservedObject var stateCenter: StateCenter
-    @Binding var range: ClosedRange<Int>
+    var range: ClosedRange<Int>
     
     let cornerRadius = 12.0
     
@@ -61,6 +61,6 @@ struct HomeViewBottom: View {
 
 struct HomeViewBottom_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewBottom(stateCenter: StateCenter(), range: Binding.constant((1...20)))
+        HomeViewBottom(stateCenter: StateCenter(), range: (1...20))
     }
 }

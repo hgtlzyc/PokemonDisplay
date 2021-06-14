@@ -80,7 +80,6 @@ class StateCenter: ObservableObject {
                 appState.pokemonListState.loadPokemonError = error
             case .success(let pokemonViewModelDic):
                 appState.pokemonListState.pokemonsDic = pokemonViewModelDic
-                print(pokemonViewModelDic)
             }
             
         case .cancelPokemonLoading:
