@@ -1,6 +1,6 @@
 # PokemonDisplay
 
-Screen recording updated 06/12/21
+Screen recording updated 06/13/21
 
 ![](https://github.com/hgtlzyc/PokemonDisplay/blob/077e355ec85d54af01e74c69ddd843bfeb3cde61/screenRecording.gif)
 
@@ -15,7 +15,7 @@ Able to open by URLs and set the app to corresponding status
 
 Currently achieved:
 
-06/13/21 request data from the Pokemon API https://pokeapi.co/
+06/13/21 request data from the Pokemon API https://pokeapi.co/ + use stepper to set the target range upper index
 
 06/12/21 make the task able to "resume" after cancel the task( manually or app killed)
 
