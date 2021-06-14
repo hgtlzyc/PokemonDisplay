@@ -121,7 +121,7 @@ struct PokemonListState {
               let higherBound = targetPokemonRange?.upperInclusiveBound else {
             return sortedList
         }
-        let sortedAndFilteredList = sortedList.filter{ $0.id <= higherBound && $0.id >= lowerBound }
+        let sortedAndFilteredList = sortedList.filter{ (lowerBound...higherBound).contains($0.id) }
         
         return sortedAndFilteredList
     }
