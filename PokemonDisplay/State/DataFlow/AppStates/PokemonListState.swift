@@ -26,7 +26,7 @@ struct PokemonListState {
     }
     
     var upperPokemonsLimit: Int {
-        guard let upperBound = targetPokemonRange?.upperInclusiveBound else {
+        guard let upperBound = targetPokemonRange?.upperInclusiveBound, upperBound < 500 else {
             return 30
         }
         return upperBound
