@@ -32,7 +32,7 @@
 		E9E826A226741AC2007F6DF2 /* ProgressTrackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E826A126741AC2007F6DF2 /* ProgressTrackable.swift */; };
 		E9E826A726744E4C007F6DF2 /* PokemonIndexRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E826A626744E4C007F6DF2 /* PokemonIndexRange.swift */; };
 		E9E826AA267454E1007F6DF2 /* PokemonListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E826A9267454E1007F6DF2 /* PokemonListState.swift */; };
-		E9E826AE26755F1C007F6DF2 /* LoadPokemonPressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E826AD26755F1C007F6DF2 /* LoadPokemonPressor.swift */; };
+		E9E826AE26755F1C007F6DF2 /* LoadPokemonProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E826AD26755F1C007F6DF2 /* LoadPokemonProcessor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +63,7 @@
 		E9E826A126741AC2007F6DF2 /* ProgressTrackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTrackable.swift; sourceTree = "<group>"; };
 		E9E826A626744E4C007F6DF2 /* PokemonIndexRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonIndexRange.swift; sourceTree = "<group>"; };
 		E9E826A9267454E1007F6DF2 /* PokemonListState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListState.swift; sourceTree = "<group>"; };
-		E9E826AD26755F1C007F6DF2 /* LoadPokemonPressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPokemonPressor.swift; sourceTree = "<group>"; };
+		E9E826AD26755F1C007F6DF2 /* LoadPokemonProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPokemonProcessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,7 +257,7 @@
 		E9E826AC26755ED6007F6DF2 /* AppCommandsUtility */ = {
 			isa = PBXGroup;
 			children = (
-				E9E826AD26755F1C007F6DF2 /* LoadPokemonPressor.swift */,
+				E9E826AD26755F1C007F6DF2 /* LoadPokemonProcessor.swift */,
 				E919AA542676C7E600003A1C /* SimulatorAPICalls.swift */,
 			);
 			path = AppCommandsUtility;
@@ -339,7 +339,7 @@
 				E98E758326703D3800E68D09 /* AppError.swift in Sources */,
 				E98E758826703F2B00E68D09 /* FileHelper.swift in Sources */,
 				E98E758A26704F5800E68D09 /* AppAction.swift in Sources */,
-				E9E826AE26755F1C007F6DF2 /* LoadPokemonPressor.swift in Sources */,
+				E9E826AE26755F1C007F6DF2 /* LoadPokemonProcessor.swift in Sources */,
 				E9E826AA267454E1007F6DF2 /* PokemonListState.swift in Sources */,
 				E98E75662670303500E68D09 /* SceneDelegate.swift in Sources */,
 				E9E8269926730D79007F6DF2 /* kJsonFileNames.swift in Sources */,

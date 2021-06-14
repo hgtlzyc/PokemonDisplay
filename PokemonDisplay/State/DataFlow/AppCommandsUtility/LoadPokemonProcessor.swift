@@ -1,5 +1,5 @@
 //
-//  LoadPokemonPressor.swift
+//  LoadPokemonProcessor.swift
 //  PokemonDisplay
 //
 //  Created by lijia xu on 6/12/21.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 //Real API
-struct PokemonLoadingPressor {
+struct PokemonLoadingProcessor {
     let maxTasks: Int
     let delayInSeconds: Double
     let controlled: Bool

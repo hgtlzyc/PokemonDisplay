@@ -12,7 +12,6 @@ enum StateCenterSubType: Hashable, CaseIterable{
     case loadingPokemon
 }
 
-
 class StateCenter: ObservableObject {
     @Published var appState = AppStates()
     
@@ -23,7 +22,6 @@ class StateCenter: ObservableObject {
     }
     
     func executeAction(_ action: AppAction) {
-        //print(action)
         let result = self.reduce(state: self.appState, action: action)
         self.appState = result.newState
         guard let command = result.newCommand else { return }
@@ -44,7 +42,6 @@ class StateCenter: ObservableObject {
         switch action {
         case .reloadAllPokemons(let range) :
             if appState.pokemonListState.currentlyLoadingPokemons {
-                //print("[ACTION] load break in reload all")
                 break
             }
             appState.pokemonListState.targetPokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound)
@@ -55,7 +52,6 @@ class StateCenter: ObservableObject {
             
         case .loadSelectedPokemons(let indexSet):
             guard !appState.pokemonListState.currentlyLoadingPokemons else {
-                print("[ACTION] load break in load missing")
                 break
             }
             
