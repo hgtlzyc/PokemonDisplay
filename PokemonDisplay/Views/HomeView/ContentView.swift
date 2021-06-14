@@ -16,13 +16,12 @@ struct ContentView: View {
                 LazyVStack{
                     ForEach(stateCenter.appState.pokemonListState.sortedPokemonList) { viewModel in
                         Text("\(viewModel.id)  " + viewModel.name)
-                            
-                            
                     }
                     .animation(.easeIn)
                 }
                 
             }
+            
             //UI not refined will finish later
             let listState = stateCenter.appState.pokemonListState
                         
@@ -58,9 +57,9 @@ struct ContentView: View {
                     let upperIndex = listState.upperPokemonsLimit
                     Text("up to index \(upperIndex)")
                     Stepper("") {
-                        stateCenter.appState.pokemonListState.targetPokemonRange?.upperInclusiveBound += 1
+                        stateCenter.executeAction(.adjustTargetRange(lowerTo: nil, upperInclusiveTo: upperIndex + 1))
                     } onDecrement: {
-                        stateCenter.appState.pokemonListState.targetPokemonRange?.upperInclusiveBound -= 1
+                        stateCenter.executeAction(.adjustTargetRange(lowerTo: nil, upperInclusiveTo: upperIndex - 1))
                     }
                     
                 }

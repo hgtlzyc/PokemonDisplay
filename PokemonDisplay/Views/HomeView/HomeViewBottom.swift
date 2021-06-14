@@ -42,7 +42,7 @@ struct HomeViewBottom: View {
             
             if !isLoading && !isListEmpty{
                 Button(action: {
-                    stateCenter.executeAction(.deletePokemonCache)
+                    stateCenter.executeAction(.deletePokemonViewModelCache)
                 }, label: {
                     Text("Clear Cache")
                         .frame(width: 120, height: 50, alignment: .center)

@@ -11,7 +11,7 @@ import Foundation
 
 struct PokemonListState {
     
-    //Data
+    //MARK: - Data
     @FileStorage(directory: .cachesDirectory,
                  fileName: kJsonFileNames.pokemonRangeJsonFileName)
     var targetPokemonRange : PokemonIndexRange?
@@ -21,25 +21,27 @@ struct PokemonListState {
     var pokemonsDic: [Int: PokemonViewModel]?
     
     
-    //States
+    //MARK: - States
     var loadPokemonError: AppError?
     var currentlyLoadingPokemons = false
     
-    
-    //ViewDisplay
     var currentPokemonsCount: Int? {
         guard let count = pokemonsDic?.count else { return nil }
         return count
     }
     
+    //MARK: - Range Display related
     var upperPokemonsLimit: Int {
-        guard let upperBound = targetPokemonRange?.upperInclusiveBound, upperBound < 500 else {
+        guard let upperBound = targetPokemonRange?.upperInclusiveBound else {
             return 30
+        }
+        guard upperBound <= kAPIConstants.pokemonUpperInclusiveBound else {
+            return kAPIConstants.pokemonUpperInclusiveBound
         }
         return upperBound
     }
     
-    //load missing related
+    //MARK: - load missing related
     var loadMissingButtonString: String? {
         guard let missingSet = missingIndexSet else { return nil }
         
@@ -65,7 +67,7 @@ struct PokemonListState {
         return targetIndexes.subtracting(loadedIndexs)
     }
     
-    //progress bar related
+    //MARK: - progress bar related
     var progressTextString: String? {
         guard let progress = currentLoadProgress else { return nil }
         let percent = progress * 100
@@ -94,7 +96,7 @@ struct PokemonListState {
         return currentlyLoadingPokemons || (progress != 1.0)
     }
     
-    //buttons related
+    //MARK: - buttons display logic related
     var buttonShouldDisplayLoading: Bool {
         currentlyLoadingPokemons
     }
@@ -121,6 +123,8 @@ struct PokemonListState {
               let higherBound = targetPokemonRange?.upperInclusiveBound else {
             return sortedList
         }
+        
+        guard lowerBound <= higherBound else { return [] }
         let sortedAndFilteredList = sortedList.filter{ (lowerBound...higherBound).contains($0.id) }
         
         return sortedAndFilteredList

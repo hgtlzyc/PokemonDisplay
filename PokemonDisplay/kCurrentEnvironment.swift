@@ -17,6 +17,6 @@ struct kCurrentEnvironment {
     
     //Limit the calls to API
     static let maxTasksBackPressure: Int = 1
-    static let delayInSecondsBackPressure: Double = 0.1
+    static let delayInSecondsBackPressure: Double = 0.2
     
 }

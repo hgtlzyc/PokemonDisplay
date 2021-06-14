@@ -67,7 +67,7 @@ struct SimulatorPokemonLoadingProcess {
                     .receivedPokemons( .success(viewModelDic) ,isFinished: false)
                 )
             })
-            .store(in: &stateCenter.subscriptions[.loadingPokemon]!)
+            .store(in: &stateCenter.subscriptions[.loadingPokemonDM]!)
     }
 
 }

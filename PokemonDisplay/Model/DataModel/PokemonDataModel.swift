@@ -9,7 +9,6 @@ import Foundation
 
 struct PokemonDataModel: Codable {
     let id: Int
-    
     let species: SpeciesContainer
     
     struct SpeciesContainer: Codable {

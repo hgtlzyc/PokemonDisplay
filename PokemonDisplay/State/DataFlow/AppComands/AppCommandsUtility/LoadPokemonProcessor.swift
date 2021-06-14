@@ -25,14 +25,14 @@ struct PokemonLoadingProcessor {
             self.delayInSeconds = delayInSeconds
         case false:
             self.controlled = false
-            self.maxTasks = kAPIConstants.maxBackPressureLimit
+            self.maxTasks = kAPIConstants.uncontrolledMaxTasksPressureLimit
             self.delayInSeconds = 0
         }
     }
     
     func process (in stateCenter: StateCenter, targetRange: ClosedRange<Int>, reloadAll: Bool) -> Void {
         let baseUrlStrings = targetRange.map { index in
-            kAPIConstants.urlBaseForSinglePokemon(index: index)
+            kAPIConstants.urlBaseForSinglePokemonDM(index: index)
         }
 
         changeStateCenterBasedOnURLArray(in: stateCenter,
@@ -43,7 +43,7 @@ struct PokemonLoadingProcessor {
     
     func process (in stateCenter: StateCenter, selectedSet: Set<Int>, reloadAll: Bool) -> Void {
         let baseUrlStrings = selectedSet.map { index in
-            kAPIConstants.urlBaseForSinglePokemon(index: index)
+            kAPIConstants.urlBaseForSinglePokemonDM(index: index)
         }
 
         changeStateCenterBasedOnURLArray(in: stateCenter,
@@ -102,7 +102,7 @@ struct PokemonLoadingProcessor {
                     ) ,isFinished: false)
                 )
             }
-            .store(in: &stateCenter.subscriptions[.loadingPokemon]!)
+            .store(in: &stateCenter.subscriptions[.loadingPokemonDM]!)
     }
     
     private func generateSinglePokemonDMPublisher(_ urlString: String) throws -> AnyPublisher<PokemonDataModel, AppError> {

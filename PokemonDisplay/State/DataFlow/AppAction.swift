@@ -8,9 +8,16 @@
 import Foundation
 
 enum AppAction {
-    case deletePokemonCache
+    
+    //user preference related
+    case adjustTargetRange(lowerTo:Int? , upperInclusiveTo:Int?)
+    
+    //Cache Related
+    case deletePokemonViewModelCache
+    
+    //loading reloading related
+    case receivedPokemons(Result<[Int:PokemonViewModel], AppError>?, isFinished: Bool)
     case cancelPokemonLoading
     case reloadAllPokemons(withIndexRange: ClosedRange<Int>)
     case loadSelectedPokemons(withIndexSet: Set<Int>?)
-    case receivedPokemons(Result<[Int:PokemonViewModel], AppError>?, isFinished: Bool)
 }
