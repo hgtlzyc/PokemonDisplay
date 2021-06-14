@@ -11,15 +11,22 @@ import Foundation
 
 struct PokemonListState {
     
-    //States
+    //Data
     @FileStorage(directory: .cachesDirectory,
                  fileName: kJsonFileNames.pokemonRangeJsonFileName)
     var targetPokemonRange : PokemonIndexRange?
     
+    @FileStorage(directory: .cachesDirectory,
+                 fileName: kJsonFileNames.pokemonsJsonFileName)
+    var pokemonsDic: [Int: PokemonViewModel]?
     
+    
+    //States
     var loadPokemonError: AppError?
     var currentlyLoadingPokemons = false
     
+    
+    //ViewDisplay
     var currentPokemonsCount: Int? {
         guard let count = pokemonsDic?.count else { return nil }
         return count
@@ -107,9 +114,7 @@ struct PokemonListState {
         }
     }
     
-    
-    //calclated data values
-    var sortdPokemonList: [PokemonViewModel] {
+    var sortedPokemonList: [PokemonViewModel] {
         guard let pokemonDic = pokemonsDic else { return [] }
         let sortedList = pokemonDic.keys.sorted(by: < ).reduce(into: []) { $0 = $0 + [pokemonDic[$1]!] }
         guard let lowerBound = targetPokemonRange?.lowerBound,
@@ -120,12 +125,6 @@ struct PokemonListState {
         
         return sortedAndFilteredList
     }
-    
-    
-    //Data
-    @FileStorage(directory: .cachesDirectory,
-                 fileName: kJsonFileNames.pokemonsJsonFileName)
-    var pokemonsDic: [Int: PokemonViewModel]?
     
 }
 

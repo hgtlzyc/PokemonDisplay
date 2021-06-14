@@ -14,7 +14,7 @@ struct ContentView: View {
         VStack{
             ScrollView{
                 LazyVStack{
-                    ForEach(stateCenter.appState.pokemonListState.sortdPokemonList) { viewModel in
+                    ForEach(stateCenter.appState.pokemonListState.sortedPokemonList) { viewModel in
                         Text("\(viewModel.id)  " + viewModel.name)
                             
                             
