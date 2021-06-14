@@ -4,6 +4,24 @@ Screen recording updated 06/13/21
 
 ![](https://github.com/hgtlzyc/PokemonDisplay/blob/077e355ec85d54af01e74c69ddd843bfeb3cde61/screenRecording.gif)
 
+
+"""
+ used flatMap to limit the calls to API, maxTasks set to 1 and delay set to 0.1s
+
+            .flatMap(maxPublishers: .max(maxTasks)) { urlString -> AnyPublisher<PokemonDataModel, AppError> in
+                do {
+                    let publisher = try generateSinglePokemonDMPublisher(urlString)
+                    return publisher
+                        .delay(for: .seconds(delayInSeconds), scheduler: DispatchQueue(label: urlString))
+                        .eraseToAnyPublisher()
+                    
+                } catch let err {
+                    return Fail<PokemonDataModel, AppError>(error: AppError.networkError(err)).eraseToAnyPublisher()
+                }
+            }
+
+"""
+
 Goal:
 
 Using Combine to restore, resume, track the downloading progress of large amount of pokemon infos(including pictures) from the pokemon open API
