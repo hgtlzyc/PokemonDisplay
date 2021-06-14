@@ -15,6 +15,8 @@ Able to open by URLs and set the app to corresponding status
 
 Currently achieved:
 
+06/13/21 request data from the Pokemon API https://pokeapi.co/
+
 06/12/21 make the task able to "resume" after cancel the task( manually or app killed)
 
 06/11/21 Kill the app and then reopen will be able to restore the downloaded values and progress 
@@ -25,7 +27,7 @@ Currently achieved:
 
 Next:
 
-call the actuall API
+improve UI + load images
 
 
 Background:
