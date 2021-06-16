@@ -31,6 +31,17 @@ struct PokemonListState {
     }
     
     //MARK: - Range Display related
+    var lowerPokemonsLimit: Int {
+        guard let lowerBound = targetPokemonRange?.lowerBound else {
+            return 30
+        }
+        guard lowerBound >= 1 else {
+            return 1
+        }
+        return lowerBound
+    }
+    
+    
     var upperPokemonsLimit: Int {
         guard let upperBound = targetPokemonRange?.upperInclusiveBound else {
             return 30
@@ -59,12 +70,14 @@ struct PokemonListState {
               currentlyLoadingPokemons == false else {
             return nil
         }
+        guard lower <= upper else { return nil }
         
         let targetIndexes = Set(lower...upper)
         let loadedIndexes = pokemonsDic?.values.map{$0.id}
         
         guard let loadedIndexs = loadedIndexes else { return nil }
-        return targetIndexes.subtracting(loadedIndexs)
+        let missingSet = targetIndexes.filter{ !loadedIndexs.contains($0) }
+        return missingSet
     }
     
     //MARK: - progress bar related

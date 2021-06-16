@@ -68,7 +68,7 @@ class StateCenter: ObservableObject {
             if appState.pokemonListState.currentlyLoadingPokemons {
                 break
             }
-            appState.pokemonListState.targetPokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound)
+            appState.pokemonListState.targetPokemonRange = PokemonIndexRange(lowerBound: range.lowerBound, upperInclusiveBound: range.upperBound, changeFrom: .lower)
             appState.pokemonListState.pokemonsDic = nil
             appState.pokemonListState.currentlyLoadingPokemons = true
             appState.pokemonListState.loadPokemonError = nil
@@ -79,10 +79,8 @@ class StateCenter: ObservableObject {
                 break
             }
             
-            guard let targetRange = appState.pokemonListState.targetPokemonRange,
-                  let indexSet = indexSet,
-                  Set((targetRange.lowerBound...targetRange.upperInclusiveBound)).isStrictSuperset(of: indexSet) else {
-                appState.pokemonListState.loadPokemonError = .selectedIndexNotInRange(index: indexSet?.first)
+            guard let indexSet = indexSet else {
+                appState.pokemonListState.loadPokemonError = .selectedIndexSetNotExpected(index: indexSet?.first)
                 break
             }
             

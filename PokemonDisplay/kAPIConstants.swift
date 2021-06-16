@@ -15,7 +15,6 @@ struct kAPIConstants{
     
     //TODO: featch the upperlimit from API
     static let pokemonUpperInclusiveBound: Int = 1000
-    
     static func urlBaseForSinglePokemonDM(index: Int) -> String {
         return "https://pokeapi.co/api/v2/pokemon/\(index)"
     }

@@ -27,8 +27,10 @@ struct AdjustTargetRangeCommand: AppCommand {
                 }
                 let newRange = PokemonIndexRange(
                     lowerBound: newLowerBound,
-                    upperInclusiveBound: newUpperBound
+                    upperInclusiveBound: newUpperBound, changeFrom: .lower
                 )
+                print("Adjusted in Range Command")
+                
                 stateCenter.appState.pokemonListState.targetPokemonRange = newRange
                 
             case let ( nil, .some( newUpperBound ) ):
@@ -39,7 +41,7 @@ struct AdjustTargetRangeCommand: AppCommand {
                 
                 let newRange = PokemonIndexRange(
                     lowerBound: currentTarget.lowerBound,
-                    upperInclusiveBound: newUpperBound
+                    upperInclusiveBound: newUpperBound, changeFrom: .upper
                 )
                 
                 stateCenter.appState.pokemonListState.targetPokemonRange = newRange
@@ -51,7 +53,7 @@ struct AdjustTargetRangeCommand: AppCommand {
                 }
                 let newRange = PokemonIndexRange(
                     lowerBound: newLowerBound,
-                    upperInclusiveBound: currentTarget.upperInclusiveBound
+                    upperInclusiveBound: currentTarget.upperInclusiveBound, changeFrom: .lower
                 )
                 stateCenter.appState.pokemonListState.targetPokemonRange = newRange
                 

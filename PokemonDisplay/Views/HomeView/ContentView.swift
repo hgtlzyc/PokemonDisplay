@@ -13,22 +13,25 @@ struct ContentView: View {
 
     var body: some View {
         VStack{
-            ScrollView{
-                LazyVStack{
-                    ForEach(stateCenter.appState.pokemonListState.sortedAndFilteredPokemonList) { viewModel in
-                        //use Kinfisher for now, might be modify later
-                        HStack {
-                            KFImage(viewModel.imageURL)
-                                .cancelOnDisappear(false)
-                                .loadImmediately()
-                            
-                            Text("\(viewModel.id)  " + viewModel.name)
+            GeometryReader{ prox in
+                ScrollView{
+                    LazyVStack{
+                        ForEach(stateCenter.appState.pokemonListState.sortedAndFilteredPokemonList) { viewModel in
+                            //use Kinfisher for now, might be modify later
+                            HStack {
+                                KFImage(viewModel.imageURL)
+                                    .cancelOnDisappear(false)
+                                    .loadImmediately()
                                 
+                                Text("\(viewModel.id)  " + viewModel.name)
+                                    
+                            }
                         }
+                        .animation(.easeIn)
                     }
-                    .animation(.easeIn)
+                    .frame(width: prox.size.width, alignment: .center)
+                    
                 }
-                
             }
             
             //UI not refined will finish later
@@ -67,8 +70,19 @@ struct ContentView: View {
             }
             if !listState.currentlyLoadingPokemons {
                 HStack{
+                    let lowerIndex = listState.lowerPokemonsLimit
+                    Text("from \(lowerIndex)")
+                    Stepper("") {
+                        stateCenter.executeAction(.adjustTargetRange(lowerTo: lowerIndex + 1, upperInclusiveTo: nil))
+                    } onDecrement: {
+                        stateCenter.executeAction(.adjustTargetRange(lowerTo: lowerIndex - 1, upperInclusiveTo: nil))
+                    }
+                    
+                    
+                    
+                    
                     let upperIndex = listState.upperPokemonsLimit
-                    Text("up to index \(upperIndex)")
+                    Text("up to \(upperIndex)")
                     Stepper("") {
                         stateCenter.executeAction(.adjustTargetRange(lowerTo: nil, upperInclusiveTo: upperIndex + 1))
                     } onDecrement: {
@@ -81,7 +95,7 @@ struct ContentView: View {
             
             //MARK: reload
             
-            HomeViewBottom(stateCenter: stateCenter, range: (1...listState.upperPokemonsLimit) ).padding()
+            HomeViewBottom(stateCenter: stateCenter, range: (listState.lowerPokemonsLimit...listState.upperPokemonsLimit) ).padding()
         }
         .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }

@@ -10,7 +10,7 @@ import Foundation
 enum AppError: Error {
     
     //Status Related
-    case selectedIndexNotInRange(index: Int?)
+    case selectedIndexSetNotExpected(index: Int?)
     case targetIndexBoundError(String)
     
     //Subscriptions
