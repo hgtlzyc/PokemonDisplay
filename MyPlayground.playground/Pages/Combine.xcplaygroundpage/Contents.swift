@@ -32,40 +32,25 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
     cancelableIntTasks.cancelAll()
 }
 
-
-//outputs
-//*id C00 started
-//*id A8A started
-//id A8A fizzbuzz at 600 progress 0.0%
-//id C00 buzz at 100 progress 0.0%
-//*id 744 started
-//id 744 buzz at 2000 progress 0.0%
-//id 744 fizz at 2001 progress 1.0%
-//id C00 fizz at 102 progress 2.0%
-//id 744 fizz at 2004 progress 1.0%
-//id A8A fizz at 603 progress 1.0%
-//id 744 buzz at 2005 progress 1.0%
-//id C00 fizzbuzz at 105 progress 5.0%
-//....
-//id 744 fizz at 2019 progress 4.0%
-//4 tasks initiated 3 started
+//Odd Even/ *id E41 STARTED
+//FizzBuzz/ *id 3C1 STARTED
+//Odd Even/ *id 2D8 STARTED
+//FizzBuzz/ *id C19 STARTED
+//5 tasks initiated 4 started
 //task at index 0 failed
-//id 744 buzz at 2020 progress 4.0%
-//id A8A fizz at 618 progress 5.0%
-//id C00 fizzbuzz at 120 progress 20.0%
-//....
-//id C00 fizz at 132 progress 32.0%
-//**C00 canceled at 133 progress: 33.0%
-//id A8A fizz at 636 progress 9.0%
-//id 744 fizzbuzz at 2040 progress 7.0%
-//id A8A fizz at 639 progress 10.0%
-//id 744 fizz at 2043 progress 8.0%
-//...
-//id A8A fizz at 654 progress 14.0%
-//id 744 fizz at 2058 progress 10.0%
-//id A8A buzz at 655 progress 14.0%
-//**744 canceled at 2058 progress: 10.0%
-//**A8A canceled at 656 progress: 15.0%
+//FizzBuzz/ id 3C1 fizzbuzz at 600 progress 0.0%
+//Odd Even/ id E41 Even at 600 progress 0.0%
+//Odd Even/ id 2D8 Even at 600 progress 0.0%
+//FizzBuzz/ id C19 buzz at 2000 progress 0.0%
+//Odd Even/ **E41 CANCELED at 600 progress: 0.0%
+//Odd Even/ id 2D8 Odd at 601 progress 1.0%
+//FizzBuzz/ id C19 fizz at 2001 progress 1.0%
+//Odd Even/ id 2D8 Even at 602 progress 1.0%
+//FizzBuzz/ id 3C1 fizz at 603 progress 1.0%
+//Odd Even/ id 2D8 Odd at 603 progress 1.0%
+//Odd Even/ **2D8 CANCELED at 603 progress: 1.0%
+//FizzBuzz/ **3C1 CANCELED at 603 progress: 1.0%
+//FizzBuzz/ **C19 CANCELED at 2003 progress: 1.0%
 
 //Task related
 func generateIntInRangePublisher(_ fromIndex: Int,_ toIndex: Int) -> AnyPublisher<Int, Never> {

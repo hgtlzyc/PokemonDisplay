@@ -78,9 +78,6 @@ struct ContentView: View {
                         stateCenter.executeAction(.adjustTargetRange(lowerTo: lowerIndex - 1, upperInclusiveTo: nil))
                     }
                     
-                    
-                    
-                    
                     let upperIndex = listState.upperPokemonsLimit
                     Text("up to \(upperIndex)")
                     Stepper("") {
