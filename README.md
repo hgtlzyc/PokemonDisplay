@@ -60,17 +60,5 @@ Able to open by URLs and set the app to corresponding status
 
 improve UI + Able to open by URLs and set the app to corresponding status
 
-
-### Background:
-
-Read many books and want to practice/demonstrate my skills, 
-
-currently I did not find codes showing how to resume/track/restore downloadings using Combine,
-
-so I decided to make my own project/ 
-
-currently looking for entry level iOS developer jobs
-(no experience in a team, but have excellent understanding of Swift, Combine, SwiftUI)
-
 ### Contact
 hgtlzyc92@gmail.com
