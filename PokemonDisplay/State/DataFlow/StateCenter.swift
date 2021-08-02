@@ -20,14 +20,13 @@ class StateCenter: ObservableObject {
     init() {
         cancelAndResetSubscritions(types: StateCenterSubType.allCases)
     }
-            
+    
     func executeAction(_ action: AppAction) {
-        DispatchQueue.main.async {
-            let result = self.reduce(state: self.appState, action: action)
-            self.appState = result.newState
-            guard let command = result.newCommand else { return }
-            command.execute(in: self)
-        }
+        let result = self.reduce(state: self.appState, action: action)
+        self.appState = result.newState
+        guard let command = result.newCommand else { return }
+        command.execute(in: self)
+        
     }
     
     private func reduce(state: AppStates, action: AppAction) -> (newState: AppStates, newCommand: AppCommand?) {
@@ -40,7 +39,7 @@ class StateCenter: ObservableObject {
             appCommand = AdjustTargetRangeCommand(
                 newlowerBound, newUpperInclusiveBound
             )
-        
+            
         //MARK: Cache Related
         case .deletePokemonViewModelCache:
             //property wrapper will clean the cache
@@ -57,13 +56,13 @@ class StateCenter: ObservableObject {
             case .success(let pokemonViewModelDic):
                 appState.pokemonListState.pokemonsDic = pokemonViewModelDic
             }
-        
+            
         case .cancelPokemonLoading:
             guard appState.pokemonListState.currentlyLoadingPokemons else { break }
             cancelAndResetSubscritions(types: [.loadingPokemonDM])
             appState.pokemonListState.currentlyLoadingPokemons = false
-        
-        
+            
+            
         case .reloadAllPokemons(let range) :
             if appState.pokemonListState.currentlyLoadingPokemons {
                 break
@@ -92,7 +91,7 @@ class StateCenter: ObservableObject {
         
         return (newState: appState, newCommand: appCommand)
     }
-        
+    
     private func cancelAndResetSubscritions(types: [StateCenterSubType]) {
         types.forEach { subType in
             subscriptions[subType]?.forEach{$0.cancel()}
