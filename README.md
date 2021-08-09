@@ -1,6 +1,7 @@
 # PokemonDisplay
-
-Screen recording updated 06/15/21, calling API "https://pokeapi.co/api/v2/pokemon/1"
+[Go To My Resume](https://github.com/hgtlzyc/Resume/blob/main/README.md#pokemon-display-github-repo)
+<br />
+Screen recording updated 06/15/21, calling API "https://pokeapi.co/api/v2/pokemon/1" 
 
 ![](https://github.com/hgtlzyc/PokemonDisplay/blob/225c53fc4e3f02d16c9ea43c0d93ae59aa1241a5/screenRecording.gif)
 
