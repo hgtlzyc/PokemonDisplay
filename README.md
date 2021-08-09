@@ -1,5 +1,5 @@
 # PokemonDisplay
-[Go To My Resume](https://github.com/hgtlzyc/Resume)
+[Go To My Resume](https://github.com/hgtlzyc/Resume/blob/main/README.md)
 <br />
 Screen recording updated 06/15/21, calling API "https://pokeapi.co/api/v2/pokemon/1" 
 
